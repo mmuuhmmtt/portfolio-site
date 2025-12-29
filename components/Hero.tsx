@@ -238,7 +238,10 @@ const Hero = () => {
               </div>
               {/* Terminal label */}
               <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 text-terminal-green font-mono text-[10px] opacity-50 whitespace-nowrap">
-                <span className="terminal-prompt"></span>PROFILE [ACTIVE]
+                <span className="terminal-prompt"></span>PROFILE [
+                <span className="group-hover:hidden">DEACTIVE</span>
+                <span className="hidden group-hover:inline">ACTIVE</span>
+                ]
               </div>
             </div>
           </div>
@@ -326,7 +329,10 @@ const Hero = () => {
               </div>
               {/* Terminal label */}
               <div className="absolute -bottom-8 right-0 text-terminal-green font-mono text-[10px] opacity-50">
-                <span className="terminal-prompt"></span>PROFILE [ACTIVE]
+                <span className="terminal-prompt"></span>PROFILE [
+                <span className="group-hover:hidden">DEACTIVE</span>
+                <span className="hidden group-hover:inline">ACTIVE</span>
+                ]
               </div>
             </div>
           </div>
