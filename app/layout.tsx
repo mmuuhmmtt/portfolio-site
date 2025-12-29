@@ -1,12 +1,15 @@
 import type { Metadata } from 'next'
 import './globals.css'
 
+const isProd = process.env.NODE_ENV === 'production'
+const basePath = isProd ? '/portfolio-site' : ''
+
 export const metadata: Metadata = {
   title: 'Muhammet Coşgun - Frontend Geliştirici',
   description: 'Kullanıcı deneyimini ön planda tutan, modern teknolojilerle güçlendirilmiş web uygulamaları geliştiren frontend geliştiricisi.',
   icons: {
-    icon: '/favicon.png',
-    apple: '/favicon.png',
+    icon: `${basePath}/favicon.png`,
+    apple: `${basePath}/favicon.png`,
   },
 }
 

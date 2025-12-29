@@ -35,7 +35,7 @@ const Hero = () => {
 
   const targetText1 = 'MUHAMMET'
   const targetText2 = 'COŞGUN'
-  const targetText3 = 'FRONTEND DEVELOPER'
+  const targetText3 = 'SOFTWARE DEVELOPER'
   const targetText4 = 'BASED IN ANKARA, TURKEY'
   const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+-=[]{}|;:,.<>?'
   
