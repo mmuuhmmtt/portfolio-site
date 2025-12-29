@@ -75,7 +75,7 @@ const Navigation = () => {
           </a>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-3">
+          <div className="hidden md:flex items-center gap-2">
             {navItems.map((item) => {
               const isActive = activeSection === item.id
               return (
@@ -83,13 +83,13 @@ const Navigation = () => {
                   key={item.name}
                   href={item.href}
                   onClick={(e) => handleNavClick(e, item.href)}
-                  className={`transition-all duration-300 font-mono text-xs terminal-border px-3 py-1.5 relative group ${
+                  className={`transition-all duration-300 font-mono text-xs terminal-border px-4 py-2 relative group flex items-center justify-center min-w-[80px] ${
                     isActive
                       ? 'text-terminal-green border-terminal-green bg-dark-bg/50 shadow-[0_0_10px_rgba(0,255,65,0.3)]'
                       : 'text-terminal-gray/90 hover:text-terminal-green hover:border-terminal-green hover:bg-dark-bg/50 hover:shadow-[0_0_10px_rgba(0,255,65,0.3)]'
                   }`}
                 >
-                  <span className="relative z-10">{item.name}</span>
+                  <span className="relative z-10 whitespace-nowrap">{item.name}</span>
                   <span className={`absolute inset-0 transition-all duration-300 ${
                     isActive
                       ? 'bg-terminal-green/10'
@@ -124,7 +124,7 @@ const Navigation = () => {
                       handleNavClick(e, item.href)
                       setIsMobileMenuOpen(false)
                     }}
-                    className={`block transition-all duration-300 font-mono text-xs py-2 px-3 terminal-border relative group ${
+                    className={`block transition-all duration-300 font-mono text-xs py-3 px-4 terminal-border relative group text-center w-full ${
                       isActive
                         ? 'text-terminal-green border-terminal-green bg-dark-bg/50 shadow-[0_0_10px_rgba(0,255,65,0.3)]'
                         : 'text-terminal-gray/90 hover:text-terminal-green hover:border-terminal-green hover:bg-dark-bg/50 hover:shadow-[0_0_10px_rgba(0,255,65,0.3)]'
