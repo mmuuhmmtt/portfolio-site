@@ -8,6 +8,8 @@ const Hero = () => {
   const [mounted, setMounted] = useState(false)
   const [displayText1, setDisplayText1] = useState('')
   const [displayText2, setDisplayText2] = useState('')
+  const [displayText3, setDisplayText3] = useState('') // FRONTEND DEVELOPER
+  const [displayText4, setDisplayText4] = useState('') // BASED IN ANKARA, TURKEY
   const [isAnimating, setIsAnimating] = useState(false)
   const [videoError, setVideoError] = useState(false)
   const [systemReady, setSystemReady] = useState(0) // Yüzde sayacı (0-100)
@@ -33,6 +35,8 @@ const Hero = () => {
 
   const targetText1 = 'MUHAMMET'
   const targetText2 = 'COŞGUN'
+  const targetText3 = 'FRONTEND DEVELOPER'
+  const targetText4 = 'BASED IN ANKARA, TURKEY'
   const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+-=[]{}|;:,.<>?'
   
   // Rastgele harf üretme fonksiyonu
@@ -110,56 +114,56 @@ const Hero = () => {
     }
   }, [mounted])
 
-  // Text scramble animation for first line - only start after mount
+  // Tüm yazılar için scramble animasyonu - hepsi aynı anda
   useEffect(() => {
     if (!mounted) return
     
     setIsAnimating(true)
     
-    let iteration = 0
+    // Tüm metinler için başlangıç değerleri (rastgele harfler)
+    const texts = [
+      { setter: setDisplayText1, target: targetText1 },
+      { setter: setDisplayText2, target: targetText2 },
+      { setter: setDisplayText3, target: targetText3 },
+      { setter: setDisplayText4, target: targetText4 },
+    ]
+    
+    // Her metin için iteration sayacı
+    const iterations = texts.map(() => 0)
+    
     const interval = setInterval(() => {
-      setDisplayText1(
-        targetText1
-          .split('')
-          .map((char, index) => {
-            if (index < iteration) {
-              return targetText1[index]
-            }
-            return chars[Math.floor(Math.random() * chars.length)]
-          })
-          .join('')
-      )
-
-      if (iteration >= targetText1.length) {
+      texts.forEach((text, textIndex) => {
+        const currentIteration = iterations[textIndex]
+        
+        if (currentIteration < text.target.length) {
+          text.setter(
+            text.target
+              .split('')
+              .map((char, index) => {
+                if (index < currentIteration) {
+                  return text.target[index]
+                }
+                return chars[Math.floor(Math.random() * chars.length)]
+              })
+              .join('')
+          )
+          iterations[textIndex] += 1 / 3
+        } else if (currentIteration >= text.target.length && currentIteration < text.target.length + 0.5) {
+          // Son harfi doğru yap
+          text.setter(text.target)
+          iterations[textIndex] = text.target.length + 1
+        }
+      })
+      
+      // Tüm animasyonlar bitti mi kontrol et
+      if (iterations.every((iter, idx) => iter >= texts[idx].target.length + 0.5)) {
         clearInterval(interval)
-        // Start second line animation
-        setTimeout(() => {
-          let iteration2 = 0
-          const interval2 = setInterval(() => {
-            setDisplayText2(
-              targetText2
-                .split('')
-                .map((char, index) => {
-                  if (index < iteration2) {
-                    return targetText2[index]
-                  }
-                  return chars[Math.floor(Math.random() * chars.length)]
-                })
-                .join('')
-            )
-
-            if (iteration2 >= targetText2.length) {
-              clearInterval(interval2)
-              setIsAnimating(false)
-              setDisplayText2(targetText2)
-            }
-
-            iteration2 += 1 / 3
-          }, 50)
-        }, 200)
+        setIsAnimating(false)
+        // Son kontrol - tüm metinleri doğru yap
+        texts.forEach((text) => {
+          text.setter(text.target)
+        })
       }
-
-      iteration += 1 / 3
     }, 50)
 
     return () => clearInterval(interval)
@@ -305,8 +309,12 @@ const Hero = () => {
             </h1>
             
             <div className="space-y-1 sm:space-y-2 text-base sm:text-xl md:text-2xl text-terminal-cyan font-mono">
-              <div className="terminal-prompt">FRONTEND DEVELOPER</div>
-              <div className="terminal-prompt">BASED IN ANKARA, TURKEY</div>
+              <div className="terminal-prompt">
+                {mounted ? (displayText3 || getRandomText(targetText3.length)) : targetText3}
+              </div>
+              <div className="terminal-prompt">
+                {mounted ? (displayText4 || getRandomText(targetText4.length)) : targetText4}
+              </div>
             </div>
 
             <div className="pt-4 sm:pt-8 text-sm sm:text-base md:text-lg text-terminal-gray font-mono leading-relaxed max-w-3xl">
