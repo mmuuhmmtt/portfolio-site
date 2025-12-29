@@ -2,7 +2,11 @@
 
 import { useState, useEffect } from 'react'
 
-const Navigation = () => {
+interface NavigationProps {
+  isLoading?: boolean
+}
+
+const Navigation = ({ isLoading = false }: NavigationProps) => {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [activeSection, setActiveSection] = useState('')
@@ -53,6 +57,11 @@ const Navigation = () => {
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' })
     }
+  }
+
+  // Loading ekranında navbar'ı gizle
+  if (isLoading) {
+    return null
   }
 
   return (

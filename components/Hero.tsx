@@ -3,16 +3,21 @@
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 
-const Hero = () => {
+interface HeroProps {
+  onLoadingChange?: (isLoading: boolean) => void
+}
+
+const Hero = ({ onLoadingChange }: HeroProps = {}) => {
   const [currentTime, setCurrentTime] = useState('')
   const [mounted, setMounted] = useState(false)
   const [displayText1, setDisplayText1] = useState('')
   const [displayText2, setDisplayText2] = useState('')
   const [displayText3, setDisplayText3] = useState('') // FRONTEND DEVELOPER
-  const [displayText4, setDisplayText4] = useState('') // BASED IN ANKARA, TURKEY
   const [isAnimating, setIsAnimating] = useState(false)
   const [videoError, setVideoError] = useState(false)
   const [systemReady, setSystemReady] = useState(0) // Yüzde sayacı (0-100)
+  const [showReady, setShowReady] = useState(false) // READY ekranını göster
+  const [contentVisible, setContentVisible] = useState(false) // Ana içeriği göster
   const videoRef = useRef<HTMLVideoElement>(null)
   
   // Video path - handle basePath for GitHub Pages
@@ -36,7 +41,6 @@ const Hero = () => {
   const targetText1 = 'MUHAMMET'
   const targetText2 = 'COŞGUN'
   const targetText3 = 'SOFTWARE DEVELOPER'
-  const targetText4 = 'BASED IN ANKARA, TURKEY'
   const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+-=[]{}|;:,.<>?'
   
   // Rastgele harf üretme fonksiyonu
@@ -63,7 +67,7 @@ const Hero = () => {
     let progress = 0
     let animationFrameId: number | null = null
     const startTime = Date.now()
-    const duration = 2500 // 2.5 saniye
+    const duration = 1300 // 1.5 saniye
     
     const animate = () => {
       const elapsed = Date.now() - startTime
@@ -73,6 +77,14 @@ const Hero = () => {
       
       if (progress < 100) {
         animationFrameId = requestAnimationFrame(animate)
+      } else {
+        // 100% olduğunda READY ekranını göster
+        setShowReady(true)
+        // 500ms sonra READY ekranını kapat ve içeriği göster
+        setTimeout(() => {
+          setShowReady(false)
+          setContentVisible(true)
+        }, 350)
       }
     }
     
@@ -114,9 +126,17 @@ const Hero = () => {
     }
   }, [mounted])
 
-  // Tüm yazılar için scramble animasyonu - hepsi aynı anda
+  // Loading durumunu parent'a bildir
   useEffect(() => {
-    if (!mounted) return
+    if (onLoadingChange) {
+      const isLoading = systemReady < 100 || showReady
+      onLoadingChange(isLoading)
+    }
+  }, [systemReady, showReady, onLoadingChange])
+
+  // Tüm yazılar için scramble animasyonu - hepsi aynı anda (içerik görünür olduğunda başlar)
+  useEffect(() => {
+    if (!mounted || !contentVisible) return
     
     setIsAnimating(true)
     
@@ -125,7 +145,6 @@ const Hero = () => {
       { setter: setDisplayText1, target: targetText1 },
       { setter: setDisplayText2, target: targetText2 },
       { setter: setDisplayText3, target: targetText3 },
-      { setter: setDisplayText4, target: targetText4 },
     ]
     
     // Her metin için iteration sayacı
@@ -167,7 +186,7 @@ const Hero = () => {
     }, 50)
 
     return () => clearInterval(interval)
-  }, [mounted])
+  }, [mounted, contentVisible])
 
   return (
     <section className="min-h-screen flex flex-col justify-center px-6 lg:px-8 py-24 relative overflow-hidden">
@@ -229,6 +248,34 @@ const Hero = () => {
         ></div>
       </div>
 
+      {/* System Ready Loading Screen */}
+      {systemReady < 100 && (
+        <div className="absolute inset-0 z-30 flex items-center justify-center bg-dark-bg/95 backdrop-blur-sm">
+          <div className="text-center">
+            <div className="text-terminal-green font-mono text-3xl sm:text-4xl md:text-5xl lg:text-6xl mb-4 sm:mb-6 crt-glow">
+              <span>SYSTEM</span>
+            </div>
+            <div className="text-terminal-cyan font-mono text-4xl sm:text-5xl md:text-6xl lg:text-7xl crt-glow">
+              {systemReady}%
+            </div>
+          </div>
+        </div>
+      )}
+      
+      {/* READY Screen - Shows briefly after 100% */}
+      {showReady && (
+        <div className="absolute inset-0 z-30 flex items-center justify-center bg-dark-bg/95 backdrop-blur-sm transition-opacity duration-500">
+          <div className="text-center">
+            <div className="text-terminal-green font-mono text-3xl sm:text-4xl md:text-5xl lg:text-6xl mb-4 sm:mb-6 crt-glow">
+              <span>SYSTEM</span>
+            </div>
+            <div className="text-terminal-cyan font-mono text-4xl sm:text-5xl md:text-6xl lg:text-7xl crt-glow">
+              READY
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Terminal-style header */}
       <div className="absolute top-20 sm:top-8 left-4 right-4 sm:left-6 sm:right-6 flex flex-col sm:flex-row items-start sm:items-center justify-between text-xs sm:text-sm text-terminal-gray z-20 gap-2 sm:gap-0">
         <div className="flex items-center gap-2 sm:gap-4 flex-wrap">
@@ -243,8 +290,8 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* Main content */}
-      <div className="max-w-7xl mx-auto w-full relative z-20 pt-16 sm:pt-0">
+      {/* Main content - Only visible after READY screen */}
+      <div className={`max-w-7xl mx-auto w-full relative z-20 pt-16 sm:pt-0 transition-opacity duration-500 ${!contentVisible ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Mobile - Profile Photo (Top) */}
           <div className="flex justify-center items-center lg:hidden mb-4">
@@ -292,7 +339,7 @@ const Hero = () => {
               <span className="cursor-blink"></span>
             </div>
 
-            <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-mono font-light text-terminal-green crt-glow leading-tight">
+            <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-mono font-light text-terminal-green crt-glow leading-tight ml-2 sm:ml-3 md:ml-4">
               {mounted ? (
                 <>
                   {displayText1 || targetText1}
@@ -308,20 +355,14 @@ const Hero = () => {
               )}
             </h1>
             
-            <div className="space-y-1 sm:space-y-2 text-base sm:text-xl md:text-2xl text-terminal-cyan font-mono">
-              <div className="terminal-prompt">
+            <div className="text-terminal-cyan font-mono">
+              <div className="terminal-prompt text-2xl sm:text-3xl md:text-4xl lg:text-5xl">
                 {mounted ? (displayText3 || getRandomText(targetText3.length)) : targetText3}
-              </div>
-              <div className="terminal-prompt">
-                {mounted ? (displayText4 || getRandomText(targetText4.length)) : targetText4}
               </div>
             </div>
 
             <div className="pt-4 sm:pt-8 text-sm sm:text-base md:text-lg text-terminal-gray font-mono leading-relaxed max-w-3xl">
-              <div className="terminal-prompt">I design and develop interactive experiences</div>
-              <div className="terminal-prompt">that break away from sterile patterns,</div>
-              <div className="terminal-prompt">reintroducing delight and genuine</div>
-              <div className="terminal-prompt">engagement into everyday technology.</div>
+              <div className="terminal-prompt">Turning ideas into smooth web experiences.</div>
             </div>
 
             {/* Navigation links */}

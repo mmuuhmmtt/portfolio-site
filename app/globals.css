@@ -138,23 +138,28 @@ body::before {
   }
 }
 
-/* Scrollbar - terminal style */
+/* Scrollbar - hidden */
 ::-webkit-scrollbar {
-  width: 8px;
+  display: none;
+  width: 0;
+}
+
+html {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+body {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
 }
 
 ::-webkit-scrollbar-track {
-  background: #05050a;
-  border-left: 1px solid rgba(0, 255, 65, 0.2);
+  display: none;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(0, 255, 65, 0.3);
-  border: 1px solid rgba(0, 255, 65, 0.2);
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 255, 65, 0.5);
+  display: none;
 }
 
 /* Subtle transitions */
