@@ -9,6 +9,7 @@ interface Project {
   description: string
   technologies: string[]
   githubUrl: string
+  siteUrl?: string
   featured?: boolean
 }
 
@@ -17,7 +18,8 @@ const defaultProjects: Project[] = [
     name: 'Portfolio Website',
     description: 'Modern ve responsive portföy web sitesi. Next.js ve Tailwind CSS kullanılarak geliştirildi.',
     technologies: ['Next.js', 'TypeScript', 'Tailwind CSS'],
-    githubUrl: 'https://github.com/mmuuhmmtt/portfoy-sitem',
+    githubUrl: 'https://github.com/mmuuhmmtt/portfolio-site',
+    siteUrl: 'https://mmuuhmmtt.github.io/portfolio-site/',
     featured: true,
   },
 ]
@@ -65,6 +67,7 @@ const Projects = () => {
               description: repo.description || 'GitHub repository projesi',
               technologies: techs.length > 0 ? techs : ['JavaScript', 'Git'],
               githubUrl: repo.html_url,
+              siteUrl: repo.homepage || undefined, // GitHub Pages veya deployed site URL'i
               featured: true,
             }
           })
@@ -144,15 +147,28 @@ const Projects = () => {
                     </span>
                   ))}
                 </div>
-                <Link
-                  href={project.githubUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-terminal-green hover:text-terminal-cyan transition-colors font-mono text-sm"
-                >
-                  <span>VIEW</span>
-                  <ExternalLink className="w-4 h-4" />
-                </Link>
+                <div className="flex flex-wrap gap-3">
+                  {project.siteUrl && (
+                    <Link
+                      href={project.siteUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 text-terminal-green hover:text-terminal-cyan transition-colors font-mono text-sm terminal-border px-3 py-1.5 hover:border-terminal-cyan"
+                    >
+                      <span>VISIT SITE</span>
+                      <ExternalLink className="w-4 h-4" />
+                    </Link>
+                  )}
+                  <Link
+                    href={project.githubUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 text-terminal-gray hover:text-terminal-green transition-colors font-mono text-sm"
+                  >
+                    <span>VIEW CODE</span>
+                    <Github className="w-4 h-4" />
+                  </Link>
+                </div>
               </div>
             ))}
           </div>

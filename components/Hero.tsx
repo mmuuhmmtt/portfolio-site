@@ -208,6 +208,41 @@ const Hero = () => {
       {/* Main content */}
       <div className="max-w-7xl mx-auto w-full relative z-20 pt-16 sm:pt-0">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+          {/* Mobile - Profile Photo (Top) */}
+          <div className="flex justify-center items-center lg:hidden mb-4">
+            <div className="terminal-border p-2 relative group">
+              <div className="relative overflow-hidden">
+                <img
+                  src={imagePath}
+                  alt="Muhammet Coşgun"
+                  className="w-48 h-48 sm:w-56 sm:h-56 object-cover grayscale hover:grayscale-0 transition-all duration-500"
+                  onError={(e) => {
+                    // Fallback if image doesn't exist
+                    e.currentTarget.style.display = 'none'
+                  }}
+                />
+                {/* CRT scanline overlay on image */}
+                <div className="absolute inset-0 pointer-events-none opacity-[0.15]">
+                  <div className="h-full w-full" style={{
+                    background: `
+                      repeating-linear-gradient(
+                        0deg,
+                        rgba(0, 255, 65, 0.1) 0px,
+                        rgba(0, 255, 65, 0.1) 1px,
+                        transparent 1px,
+                        transparent 3px
+                      )
+                    `
+                  }}></div>
+                </div>
+              </div>
+              {/* Terminal label */}
+              <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 text-terminal-green font-mono text-[10px] opacity-50 whitespace-nowrap">
+                <span className="terminal-prompt"></span>PROFILE [ACTIVE]
+              </div>
+            </div>
+          </div>
+
           {/* Left side - Text content */}
           <div className="space-y-6 sm:space-y-8">
             {/* Terminal prompt style */}
@@ -262,7 +297,7 @@ const Hero = () => {
           </div>
 
           {/* Right side - Profile Photo */}
-          <div className="hidden lg:flex justify-end items-start relative z-20 -mt-16 lg:-mt-8">
+          <div className="hidden lg:flex justify-center items-start relative z-20 -mt-20 lg:-mt-12">
             <div className="terminal-border p-2 relative group">
               <div className="relative overflow-hidden">
                 <img
