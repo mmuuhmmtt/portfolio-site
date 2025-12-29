@@ -1,0 +1,88 @@
+'use client'
+
+interface ExperienceItem {
+  title: string
+  company: string
+  period: string
+  type: string
+}
+
+const experiences: ExperienceItem[] = [
+  {
+    title: 'Full-Stack Developer',
+    company: 'EGY Yazılım',
+    period: 'Eylül 2025 – Devam ediyor',
+    type: 'Stajyer',
+  },
+  {
+    title: 'Frontend Web Developer',
+    company: 'SmartICT',
+    period: 'Ağustos 2025',
+    type: 'Stajyer',
+  },
+  {
+    title: 'Uygulama Geliştirici',
+    company: 'Fernus Bilişim',
+    period: 'Mayıs 2023 – Kasım 2023',
+    type: 'Tam Zamanlı',
+  },
+  {
+    title: 'Ürün Geliştirme',
+    company: 'Fernus Bilişim',
+    period: 'Nisan 2023 – Mayıs 2023',
+    type: 'Stajyer',
+  },
+  {
+    title: 'Bilgisayar Teknisyeni',
+    company: 'Başkent Üniversitesi',
+    period: 'Nisan 2022 – Mayıs 2022',
+    type: 'Stajyer',
+  },
+]
+
+const Experience = () => {
+  return (
+    <section id="experience" className="py-32 px-6 lg:px-8">
+      <div className="max-w-6xl mx-auto">
+        <div className="mb-16">
+          <div className="text-terminal-green font-mono text-sm mb-4">
+            <span className="terminal-prompt"></span>WORK EXPERIENCE
+          </div>
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-mono font-light text-terminal-green crt-glow">
+            EXPERIENCE
+          </h2>
+        </div>
+
+        <div className="space-y-6">
+          {experiences.map((exp, index) => (
+            <div
+              key={`${exp.company}-${index}`}
+              className="terminal-border p-6 hover:border-terminal-green transition-all"
+            >
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="md:col-span-2">
+                  <h3 className="text-terminal-green font-mono text-lg mb-2">
+                    {exp.title}
+                  </h3>
+                  <div className="text-terminal-cyan font-mono text-sm mb-2">
+                    {exp.company}
+                  </div>
+                  {exp.period && (
+                    <div className="text-terminal-gray font-mono text-xs">
+                      {exp.period}
+                    </div>
+                  )}
+                </div>
+                <div className="text-terminal-amber font-mono text-sm text-right md:text-left">
+                  {exp.type}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+export default Experience

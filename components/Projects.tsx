@@ -1,0 +1,145 @@
+'use client'
+
+import { ExternalLink, Github } from 'lucide-react'
+import Link from 'next/link'
+import { useEffect, useState } from 'react'
+
+interface Project {
+  name: string
+  description: string
+  technologies: string[]
+  githubUrl: string
+  featured?: boolean
+}
+
+const defaultProjects: Project[] = [
+  {
+    name: 'Portfolio Website',
+    description: 'Modern ve responsive portföy web sitesi. Next.js ve Tailwind CSS kullanılarak geliştirildi.',
+    technologies: ['Next.js', 'TypeScript', 'Tailwind CSS'],
+    githubUrl: 'https://github.com/mmuuhmmtt/portfoy-sitem',
+    featured: true,
+  },
+]
+
+const Projects = () => {
+  const [githubProjects, setGithubProjects] = useState<Project[]>(defaultProjects)
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    const fetchRepos = async () => {
+      try {
+        const response = await fetch('/api/github-repos')
+        if (response.ok) {
+          const repos = await response.json()
+          const mappedProjects: Project[] = repos.slice(0, 3).map((repo: any) => {
+            const techs: string[] = []
+            if (repo.language) techs.push(repo.language)
+            const repoName = repo.name.toLowerCase()
+            if (repoName.includes('next') || repoName.includes('nextjs')) techs.push('Next.js')
+            if (repoName.includes('react')) techs.push('React')
+            if (repoName.includes('typescript') || repoName.includes('ts')) techs.push('TypeScript')
+            if (repoName.includes('tailwind')) techs.push('Tailwind CSS')
+            if (repoName.includes('node')) techs.push('Node.js')
+            
+            return {
+              name: repo.name
+                .split('-')
+                .map((word: string) => word.charAt(0).toUpperCase() + word.slice(1))
+                .join(' '),
+              description: repo.description || 'GitHub repository projesi',
+              technologies: techs.length > 0 ? techs : ['JavaScript', 'Git'],
+              githubUrl: repo.html_url,
+              featured: true,
+            }
+          })
+          
+          if (mappedProjects.length > 0) {
+            setGithubProjects(mappedProjects)
+          } else {
+            setGithubProjects(defaultProjects)
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching GitHub repos:', error)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    fetchRepos()
+  }, [])
+
+  return (
+    <section id="projects" className="py-32 px-6 lg:px-8">
+      <div className="max-w-6xl mx-auto">
+        <div className="mb-16">
+          <div className="text-terminal-green font-mono text-sm mb-4">
+            <span className="terminal-prompt"></span>FEATURED WORK
+          </div>
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-mono font-light text-terminal-green crt-glow">
+            PROJECTS
+          </h2>
+        </div>
+
+        {isLoading ? (
+          <div className="space-y-8">
+            {[1, 2, 3].map((i) => (
+              <div
+                key={i}
+                className="terminal-border p-6 h-32 animate-pulse"
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {githubProjects.map((project) => (
+              <div
+                key={project.name}
+                className="terminal-border p-6 hover:border-terminal-green transition-all group"
+              >
+                <div className="flex items-start justify-between mb-4">
+                  <h3 className="text-terminal-green font-mono text-lg group-hover:text-terminal-cyan transition-colors">
+                    {project.name}
+                  </h3>
+                  <Link
+                    href={project.githubUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-terminal-gray hover:text-terminal-green transition-colors"
+                  >
+                    <Github className="w-5 h-5" />
+                  </Link>
+                </div>
+                <p className="text-terminal-gray font-mono text-sm mb-4 leading-relaxed">
+                  {project.description}
+                </p>
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {project.technologies.map((tech) => (
+                    <span
+                      key={tech}
+                      className="text-xs text-terminal-amber font-mono px-2 py-1 border border-terminal-amber/30"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+                <Link
+                  href={project.githubUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-terminal-green hover:text-terminal-cyan transition-colors font-mono text-sm"
+                >
+                  <span>VIEW</span>
+                  <ExternalLink className="w-4 h-4" />
+                </Link>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </section>
+  )
+}
+
+export default Projects
