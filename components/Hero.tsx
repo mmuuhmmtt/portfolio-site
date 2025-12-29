@@ -10,6 +10,7 @@ const Hero = () => {
   const [displayText2, setDisplayText2] = useState('')
   const [isAnimating, setIsAnimating] = useState(false)
   const [videoError, setVideoError] = useState(false)
+  const [systemReady, setSystemReady] = useState(0) // Yüzde sayacı (0-100)
   const videoRef = useRef<HTMLVideoElement>(null)
   
   // Video path - handle basePath for GitHub Pages
@@ -46,8 +47,32 @@ const Hero = () => {
 
     updateTime()
     const interval = setInterval(updateTime, 1000)
+    
+    // Yüzde sayacı animasyonu - Sadece ilk yüklemede çalışır, performans odaklı
+    let progress = 0
+    let animationFrameId: number | null = null
+    const startTime = Date.now()
+    const duration = 2500 // 2.5 saniye
+    
+    const animate = () => {
+      const elapsed = Date.now() - startTime
+      progress = Math.min(100, Math.floor((elapsed / duration) * 100))
+      
+      setSystemReady(progress)
+      
+      if (progress < 100) {
+        animationFrameId = requestAnimationFrame(animate)
+      }
+    }
+    
+    // İlk frame'i başlat
+    animationFrameId = requestAnimationFrame(animate)
+    
     return () => {
       clearInterval(interval)
+      if (animationFrameId !== null) {
+        cancelAnimationFrame(animationFrameId)
+      }
     }
   }, [])
 
@@ -194,12 +219,14 @@ const Hero = () => {
       </div>
 
       {/* Terminal-style header */}
-      <div className="absolute top-4 sm:top-8 left-4 right-4 sm:left-6 sm:right-6 flex flex-col sm:flex-row items-start sm:items-center justify-between text-xs sm:text-sm text-terminal-gray z-20 gap-2 sm:gap-0">
-        <div className="flex items-center gap-2 sm:gap-4">
+      <div className="absolute top-20 sm:top-8 left-4 right-4 sm:left-6 sm:right-6 flex flex-col sm:flex-row items-start sm:items-center justify-between text-xs sm:text-sm text-terminal-gray z-20 gap-2 sm:gap-0">
+        <div className="flex items-center gap-2 sm:gap-4 flex-wrap">
           <span className="text-terminal-green">SYSTEM</span>
-          <span className="text-terminal-cyan">READY</span>
+          <span className="text-terminal-cyan">
+            {systemReady < 100 ? `${systemReady}%` : 'READY'}
+          </span>
         </div>
-        <div className="flex items-center gap-2 sm:gap-4">
+        <div className="flex items-center gap-2 sm:gap-4 flex-wrap">
           <span className="text-terminal-amber hidden sm:inline">ANKARA, TR</span>
           <span className="text-terminal-green">{mounted && currentTime}</span>
         </div>
