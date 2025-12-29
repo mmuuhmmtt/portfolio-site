@@ -203,56 +203,94 @@ const Hero = () => {
       </div>
 
       {/* Main content */}
-      <div className="max-w-6xl mx-auto w-full relative z-20 pt-16 sm:pt-0">
-        <div className="space-y-6 sm:space-y-8">
-          {/* Terminal prompt style */}
-          <div className="text-terminal-green text-xs sm:text-sm mb-2 sm:mb-4">
-            <span className="terminal-prompt"></span>
-            <span className="cursor-blink"></span>
+      <div className="max-w-7xl mx-auto w-full relative z-20 pt-16 sm:pt-0">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+          {/* Left side - Text content */}
+          <div className="space-y-6 sm:space-y-8">
+            {/* Terminal prompt style */}
+            <div className="text-terminal-green text-xs sm:text-sm mb-2 sm:mb-4">
+              <span className="terminal-prompt"></span>
+              <span className="cursor-blink"></span>
+            </div>
+
+            <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-mono font-light text-terminal-green crt-glow leading-tight">
+              {mounted ? (
+                <>
+                  {displayText1 || targetText1}
+                  <br />
+                  {displayText2 || targetText2}
+                </>
+              ) : (
+                <>
+                  {targetText1}
+                  <br />
+                  {targetText2}
+                </>
+              )}
+            </h1>
+            
+            <div className="space-y-1 sm:space-y-2 text-base sm:text-xl md:text-2xl text-terminal-cyan font-mono">
+              <div className="terminal-prompt">FRONTEND DEVELOPER</div>
+              <div className="terminal-prompt">BASED IN ANKARA, TURKEY</div>
+            </div>
+
+            <div className="pt-4 sm:pt-8 text-sm sm:text-base md:text-lg text-terminal-gray font-mono leading-relaxed max-w-3xl">
+              <div className="terminal-prompt">I design and develop interactive experiences</div>
+              <div className="terminal-prompt">that break away from sterile patterns,</div>
+              <div className="terminal-prompt">reintroducing delight and genuine</div>
+              <div className="terminal-prompt">engagement into everyday technology.</div>
+            </div>
+
+            {/* Navigation links */}
+            <div className="flex flex-wrap gap-4 sm:gap-6 pt-4 sm:pt-8 relative z-30">
+              <Link
+                href="#projects"
+                className="text-terminal-green hover:text-terminal-cyan transition-colors font-mono text-xs sm:text-sm terminal-border px-3 py-1.5 sm:px-4 sm:py-2 bg-dark-bg/50 backdrop-blur-sm hover:bg-dark-bg/70"
+              >
+                [VIEW PROJECTS]
+              </Link>
+              <Link
+                href="#contact"
+                className="text-terminal-green hover:text-terminal-cyan transition-colors font-mono text-xs sm:text-sm terminal-border px-3 py-1.5 sm:px-4 sm:py-2 bg-dark-bg/50 backdrop-blur-sm hover:bg-dark-bg/70"
+              >
+                [CONTACT]
+              </Link>
+            </div>
           </div>
 
-          <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-mono font-light text-terminal-green crt-glow leading-tight">
-            {mounted ? (
-              <>
-                {displayText1 || targetText1}
-                <br />
-                {displayText2 || targetText2}
-              </>
-            ) : (
-              <>
-                {targetText1}
-                <br />
-                {targetText2}
-              </>
-            )}
-          </h1>
-          
-          <div className="space-y-1 sm:space-y-2 text-base sm:text-xl md:text-2xl text-terminal-cyan font-mono">
-            <div className="terminal-prompt">FRONTEND DEVELOPER</div>
-            <div className="terminal-prompt">BASED IN ANKARA, TURKEY</div>
-          </div>
-
-          <div className="pt-4 sm:pt-8 text-sm sm:text-base md:text-lg text-terminal-gray font-mono leading-relaxed max-w-3xl">
-            <div className="terminal-prompt">I design and develop interactive experiences</div>
-            <div className="terminal-prompt">that break away from sterile patterns,</div>
-            <div className="terminal-prompt">reintroducing delight and genuine</div>
-            <div className="terminal-prompt">engagement into everyday technology.</div>
-          </div>
-
-          {/* Navigation links */}
-          <div className="flex flex-wrap gap-4 sm:gap-6 pt-4 sm:pt-8 relative z-30">
-            <Link
-              href="#projects"
-              className="text-terminal-green hover:text-terminal-cyan transition-colors font-mono text-xs sm:text-sm terminal-border px-3 py-1.5 sm:px-4 sm:py-2 bg-dark-bg/50 backdrop-blur-sm hover:bg-dark-bg/70"
-            >
-              [VIEW PROJECTS]
-            </Link>
-            <Link
-              href="#contact"
-              className="text-terminal-green hover:text-terminal-cyan transition-colors font-mono text-xs sm:text-sm terminal-border px-3 py-1.5 sm:px-4 sm:py-2 bg-dark-bg/50 backdrop-blur-sm hover:bg-dark-bg/70"
-            >
-              [CONTACT]
-            </Link>
+          {/* Right side - Profile Photo */}
+          <div className="hidden lg:flex justify-end items-center relative z-20">
+            <div className="terminal-border p-2 relative group">
+              <div className="relative overflow-hidden">
+                <img
+                  src="/images/profile.jpg"
+                  alt="Muhammet Coşgun"
+                  className="w-64 h-64 object-cover grayscale hover:grayscale-0 transition-all duration-500"
+                  onError={(e) => {
+                    // Fallback if image doesn't exist
+                    e.currentTarget.style.display = 'none'
+                  }}
+                />
+                {/* CRT scanline overlay on image */}
+                <div className="absolute inset-0 pointer-events-none opacity-[0.15]">
+                  <div className="h-full w-full" style={{
+                    background: `
+                      repeating-linear-gradient(
+                        0deg,
+                        rgba(0, 255, 65, 0.1) 0px,
+                        rgba(0, 255, 65, 0.1) 1px,
+                        transparent 1px,
+                        transparent 3px
+                      )
+                    `
+                  }}></div>
+                </div>
+              </div>
+              {/* Terminal label */}
+              <div className="absolute -bottom-8 right-0 text-terminal-green font-mono text-[10px] opacity-50">
+                <span className="terminal-prompt"></span>PROFILE [ACTIVE]
+              </div>
+            </div>
           </div>
         </div>
       </div>
