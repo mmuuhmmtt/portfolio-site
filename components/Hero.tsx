@@ -14,6 +14,7 @@ const Hero = () => {
   
   // Video path - handle basePath for GitHub Pages
   const [videoPath, setVideoPath] = useState('/videos/video.mp4')
+  const [imagePath, setImagePath] = useState('/images/profile.jpg')
   
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -21,8 +22,10 @@ const Hero = () => {
       const pathname = window.location.pathname
       if (pathname.startsWith('/portfolio-site')) {
         setVideoPath('/portfolio-site/videos/video.mp4')
+        setImagePath('/portfolio-site/images/profile.jpg')
       } else {
         setVideoPath('/videos/video.mp4')
+        setImagePath('/images/profile.jpg')
       }
     }
   }, [])
@@ -259,11 +262,11 @@ const Hero = () => {
           </div>
 
           {/* Right side - Profile Photo */}
-          <div className="hidden lg:flex justify-end items-center relative z-20">
+          <div className="hidden lg:flex justify-end items-start relative z-20 -mt-16 lg:-mt-8">
             <div className="terminal-border p-2 relative group">
               <div className="relative overflow-hidden">
                 <img
-                  src="/images/profile.jpg"
+                  src={imagePath}
                   alt="Muhammet Coşgun"
                   className="w-64 h-64 object-cover grayscale hover:grayscale-0 transition-all duration-500"
                   onError={(e) => {
