@@ -13,12 +13,20 @@ const Hero = () => {
   const [isMobile, setIsMobile] = useState(false)
   const videoRef = useRef<HTMLVideoElement>(null)
   
-  // Get base path for GitHub Pages
-  const basePath = typeof window !== 'undefined' 
-    ? window.location.pathname.split('/').slice(0, -1).join('/') || ''
-    : ''
+  // Video path - handle basePath for GitHub Pages
+  const [videoPath, setVideoPath] = useState('/videos/video.mp4')
   
-  const videoPath = `${basePath}/videos/video.mp4`
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      // Check if we're on GitHub Pages
+      const pathname = window.location.pathname
+      if (pathname.startsWith('/portfolio-site')) {
+        setVideoPath('/portfolio-site/videos/video.mp4')
+      } else {
+        setVideoPath('/videos/video.mp4')
+      }
+    }
+  }, [])
 
   const targetText1 = 'MUHAMMET'
   const targetText2 = 'COŞGUN'
