@@ -29,10 +29,25 @@ const Projects = () => {
   useEffect(() => {
     const fetchRepos = async () => {
       try {
-        const response = await fetch('/api/github-repos')
+        // Direct GitHub API call (works in static export)
+        const response = await fetch(
+          'https://api.github.com/users/mmuuhmmtt/repos?sort=updated&per_page=10',
+          {
+            headers: {
+              Accept: 'application/vnd.github.v3+json',
+            },
+          }
+        )
+        
         if (response.ok) {
           const repos = await response.json()
-          const mappedProjects: Project[] = repos.slice(0, 3).map((repo: any) => {
+          
+          // Filter out forks and archived repos
+          const filteredRepos = repos
+            .filter((repo: any) => !repo.fork && !repo.archived)
+            .slice(0, 3)
+          
+          const mappedProjects: Project[] = filteredRepos.map((repo: any) => {
             const techs: string[] = []
             if (repo.language) techs.push(repo.language)
             const repoName = repo.name.toLowerCase()
@@ -59,9 +74,14 @@ const Projects = () => {
           } else {
             setGithubProjects(defaultProjects)
           }
+        } else {
+          // Fallback to default projects if API fails
+          setGithubProjects(defaultProjects)
         }
       } catch (error) {
         console.error('Error fetching GitHub repos:', error)
+        // Fallback to default projects on error
+        setGithubProjects(defaultProjects)
       } finally {
         setIsLoading(false)
       }

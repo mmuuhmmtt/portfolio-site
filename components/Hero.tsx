@@ -10,7 +10,6 @@ const Hero = () => {
   const [displayText2, setDisplayText2] = useState('')
   const [isAnimating, setIsAnimating] = useState(false)
   const [videoError, setVideoError] = useState(false)
-  const [isMobile, setIsMobile] = useState(false)
   const videoRef = useRef<HTMLVideoElement>(null)
   
   // Video path - handle basePath for GitHub Pages
@@ -35,13 +34,6 @@ const Hero = () => {
   useEffect(() => {
     setMounted(true)
     
-    // Check if mobile device
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768)
-    }
-    checkMobile()
-    window.addEventListener('resize', checkMobile)
-    
     const updateTime = () => {
       const now = new Date()
       const hours = now.getHours().toString().padStart(2, '0')
@@ -53,13 +45,12 @@ const Hero = () => {
     const interval = setInterval(updateTime, 1000)
     return () => {
       clearInterval(interval)
-      window.removeEventListener('resize', checkMobile)
     }
   }, [])
 
-  // Video error handling and mobile optimization
+  // Video error handling
   useEffect(() => {
-    if (videoRef.current && !isMobile) {
+    if (videoRef.current) {
       const video = videoRef.current
       
       const handleError = () => {
@@ -81,11 +72,8 @@ const Hero = () => {
         video.removeEventListener('error', handleError)
         video.removeEventListener('loadeddata', handleLoadedData)
       }
-    } else if (videoRef.current && isMobile) {
-      // Pause video on mobile for better performance
-      videoRef.current.pause()
     }
-  }, [mounted, isMobile])
+  }, [mounted])
 
   // Text scramble animation for first line - only start after mount
   useEffect(() => {
@@ -144,9 +132,9 @@ const Hero = () => {
 
   return (
     <section className="min-h-screen flex flex-col justify-center px-6 lg:px-8 py-24 relative overflow-hidden">
-      {/* Background Video - Hidden on mobile for better performance */}
+      {/* Background Video */}
       <div className="absolute inset-0 z-0">
-        {!videoError && !isMobile ? (
+        {!videoError ? (
           <video
             ref={videoRef}
             src={videoPath}
@@ -161,10 +149,7 @@ const Hero = () => {
               setVideoError(true)
             }}
           />
-        ) : null}
-        
-        {/* Static background for mobile */}
-        {isMobile && (
+        ) : (
           <div className="w-full h-full bg-gradient-to-br from-black via-gray-900 to-black"></div>
         )}
         

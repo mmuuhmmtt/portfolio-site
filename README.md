@@ -4,12 +4,12 @@ Modern ve responsive frontend developer portföy web sitesi. Next.js, TypeScript
 
 ## Özellikler
 
-- 🎨 Dark theme tasarım
-- 📱 Tam responsive (mobil, tablet, desktop)
-- ⚡ Next.js 14 App Router
-- 🎭 Framer Motion animasyonları
-- 🎯 Modern tipografi ve spacing
-- 🔗 GitHub ve LinkedIn entegrasyonu
+-  Dark theme tasarım
+-  Tam responsive (mobil, tablet, desktop)
+-  Next.js 14 App Router
+-  Framer Motion animasyonları
+-  Modern tipografi ve spacing
+-  GitHub ve LinkedIn entegrasyonu
 
 ## Teknolojiler
 
@@ -57,6 +57,9 @@ Site [http://localhost:3000](http://localhost:3000) adresinde çalışacaktır.
 - Kişisel bilgileri `components/` klasöründeki ilgili bileşenlerde güncelleyin
 - Renkleri `tailwind.config.js` dosyasından değiştirebilirsiniz
 - Projeleri `components/Projects.tsx` dosyasından ekleyebilir veya düzenleyebilirsiniz
+
+# Canlı Demo
+https://mmuuhmmtt.github.io/portfolio-site/
 
 ## Lisans
 
