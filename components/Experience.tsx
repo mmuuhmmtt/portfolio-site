@@ -42,29 +42,29 @@ const experiences: ExperienceItem[] = [
 
 const Experience = () => {
   return (
-    <section id="experience" className="py-32 px-6 lg:px-8">
+    <section id="experience" className="py-16 sm:py-24 md:py-32 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
-        <div className="mb-16">
-          <div className="text-terminal-green font-mono text-sm mb-4">
+        <div className="mb-8 sm:mb-12 md:mb-16">
+          <div className="text-terminal-green font-mono text-xs sm:text-sm mb-2 sm:mb-4">
             <span className="terminal-prompt"></span>WORK EXPERIENCE
           </div>
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-mono font-light text-terminal-green crt-glow">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-mono font-light text-terminal-green crt-glow">
             EXPERIENCE
           </h2>
         </div>
 
-        <div className="space-y-6">
+        <div className="space-y-4 sm:space-y-6">
           {experiences.map((exp, index) => (
             <div
               key={`${exp.company}-${index}`}
-              className="terminal-border p-6 hover:border-terminal-green transition-all"
+              className="terminal-border p-4 sm:p-6 hover:border-terminal-green transition-all"
             >
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4">
                 <div className="md:col-span-2">
-                  <h3 className="text-terminal-green font-mono text-lg mb-2">
+                  <h3 className="text-terminal-green font-mono text-base sm:text-lg mb-1 sm:mb-2">
                     {exp.title}
                   </h3>
-                  <div className="text-terminal-cyan font-mono text-sm mb-2">
+                  <div className="text-terminal-cyan font-mono text-xs sm:text-sm mb-1 sm:mb-2">
                     {exp.company}
                   </div>
                   {exp.period && (
@@ -73,7 +73,7 @@ const Experience = () => {
                     </div>
                   )}
                 </div>
-                <div className="text-terminal-amber font-mono text-sm text-right md:text-left">
+                <div className="text-terminal-amber font-mono text-xs sm:text-sm text-left md:text-left mt-2 md:mt-0">
                   {exp.type}
                 </div>
               </div>

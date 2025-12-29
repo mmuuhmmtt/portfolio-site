@@ -71,13 +71,13 @@ const Projects = () => {
   }, [])
 
   return (
-    <section id="projects" className="py-32 px-6 lg:px-8">
+    <section id="projects" className="py-16 sm:py-24 md:py-32 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
-        <div className="mb-16">
-          <div className="text-terminal-green font-mono text-sm mb-4">
+        <div className="mb-8 sm:mb-12 md:mb-16">
+          <div className="text-terminal-green font-mono text-xs sm:text-sm mb-2 sm:mb-4">
             <span className="terminal-prompt"></span>FEATURED WORK
           </div>
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-mono font-light text-terminal-green crt-glow">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-mono font-light text-terminal-green crt-glow">
             PROJECTS
           </h2>
         </div>
@@ -92,11 +92,11 @@ const Projects = () => {
             ))}
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {githubProjects.map((project) => (
               <div
                 key={project.name}
-                className="terminal-border p-6 hover:border-terminal-green transition-all group"
+                className="terminal-border p-4 sm:p-6 hover:border-terminal-green transition-all group"
               >
                 <div className="flex items-start justify-between mb-4">
                   <h3 className="text-terminal-green font-mono text-lg group-hover:text-terminal-cyan transition-colors">

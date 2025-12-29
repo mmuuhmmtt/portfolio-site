@@ -10,6 +10,7 @@ const Hero = () => {
   const [displayText2, setDisplayText2] = useState('')
   const [isAnimating, setIsAnimating] = useState(false)
   const [videoError, setVideoError] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
   const videoRef = useRef<HTMLVideoElement>(null)
 
   const targetText1 = 'MUHAMMET'
@@ -18,6 +19,14 @@ const Hero = () => {
 
   useEffect(() => {
     setMounted(true)
+    
+    // Check if mobile device
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    
     const updateTime = () => {
       const now = new Date()
       const hours = now.getHours().toString().padStart(2, '0')
@@ -27,12 +36,15 @@ const Hero = () => {
 
     updateTime()
     const interval = setInterval(updateTime, 1000)
-    return () => clearInterval(interval)
+    return () => {
+      clearInterval(interval)
+      window.removeEventListener('resize', checkMobile)
+    }
   }, [])
 
-  // Video error handling
+  // Video error handling and mobile optimization
   useEffect(() => {
-    if (videoRef.current) {
+    if (videoRef.current && !isMobile) {
       const video = videoRef.current
       
       const handleError = () => {
@@ -54,8 +66,11 @@ const Hero = () => {
         video.removeEventListener('error', handleError)
         video.removeEventListener('loadeddata', handleLoadedData)
       }
+    } else if (videoRef.current && isMobile) {
+      // Pause video on mobile for better performance
+      videoRef.current.pause()
     }
-  }, [mounted])
+  }, [mounted, isMobile])
 
   // Text scramble animation for first line - only start after mount
   useEffect(() => {
@@ -114,9 +129,9 @@ const Hero = () => {
 
   return (
     <section className="min-h-screen flex flex-col justify-center px-6 lg:px-8 py-24 relative overflow-hidden">
-      {/* Background Video */}
+      {/* Background Video - Hidden on mobile for better performance */}
       <div className="absolute inset-0 z-0">
-        {!videoError ? (
+        {!videoError && !isMobile ? (
           <video
             ref={videoRef}
             src="/videos/video.mp4"
@@ -128,6 +143,11 @@ const Hero = () => {
             preload="auto"
           />
         ) : null}
+        
+        {/* Static background for mobile */}
+        {isMobile && (
+          <div className="w-full h-full bg-gradient-to-br from-black via-gray-900 to-black"></div>
+        )}
         
         {/* Dark overlay for text readability */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/70"></div>
@@ -167,27 +187,27 @@ const Hero = () => {
       </div>
 
       {/* Terminal-style header */}
-      <div className="absolute top-8 left-6 right-6 flex items-center justify-between text-sm text-terminal-gray z-20">
-        <div className="flex items-center gap-4">
+      <div className="absolute top-4 sm:top-8 left-4 right-4 sm:left-6 sm:right-6 flex flex-col sm:flex-row items-start sm:items-center justify-between text-xs sm:text-sm text-terminal-gray z-20 gap-2 sm:gap-0">
+        <div className="flex items-center gap-2 sm:gap-4">
           <span className="text-terminal-green">SYSTEM</span>
           <span className="text-terminal-cyan">READY</span>
         </div>
-        <div className="flex items-center gap-4">
-          <span className="text-terminal-amber">ANKARA, TR</span>
+        <div className="flex items-center gap-2 sm:gap-4">
+          <span className="text-terminal-amber hidden sm:inline">ANKARA, TR</span>
           <span className="text-terminal-green">{mounted && currentTime}</span>
         </div>
       </div>
 
       {/* Main content */}
-      <div className="max-w-6xl mx-auto w-full relative z-10">
-        <div className="space-y-8">
+      <div className="max-w-6xl mx-auto w-full relative z-10 pt-16 sm:pt-0">
+        <div className="space-y-6 sm:space-y-8">
           {/* Terminal prompt style */}
-          <div className="text-terminal-green text-sm mb-4">
+          <div className="text-terminal-green text-xs sm:text-sm mb-2 sm:mb-4">
             <span className="terminal-prompt"></span>
             <span className="cursor-blink"></span>
           </div>
 
-          <h1 className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-mono font-light text-terminal-green crt-glow leading-tight">
+          <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-mono font-light text-terminal-green crt-glow leading-tight">
             {mounted ? (
               <>
                 {displayText1 || targetText1}
@@ -203,12 +223,12 @@ const Hero = () => {
             )}
           </h1>
           
-          <div className="space-y-2 text-xl sm:text-2xl text-terminal-cyan font-mono">
+          <div className="space-y-1 sm:space-y-2 text-base sm:text-xl md:text-2xl text-terminal-cyan font-mono">
             <div className="terminal-prompt">FRONTEND DEVELOPER</div>
             <div className="terminal-prompt">BASED IN ANKARA, TURKEY</div>
           </div>
 
-          <div className="pt-8 text-lg text-terminal-gray font-mono leading-relaxed max-w-3xl">
+          <div className="pt-4 sm:pt-8 text-sm sm:text-base md:text-lg text-terminal-gray font-mono leading-relaxed max-w-3xl">
             <div className="terminal-prompt">I design and develop interactive experiences</div>
             <div className="terminal-prompt">that break away from sterile patterns,</div>
             <div className="terminal-prompt">reintroducing delight and genuine</div>
@@ -216,16 +236,16 @@ const Hero = () => {
           </div>
 
           {/* Navigation links */}
-          <div className="flex flex-wrap gap-6 pt-8">
+          <div className="flex flex-wrap gap-4 sm:gap-6 pt-4 sm:pt-8">
             <Link
               href="#projects"
-              className="text-terminal-green hover:text-terminal-cyan transition-colors font-mono text-sm terminal-border px-4 py-2"
+              className="text-terminal-green hover:text-terminal-cyan transition-colors font-mono text-xs sm:text-sm terminal-border px-3 py-1.5 sm:px-4 sm:py-2"
             >
               [VIEW PROJECTS]
             </Link>
             <Link
               href="#contact"
-              className="text-terminal-green hover:text-terminal-cyan transition-colors font-mono text-sm terminal-border px-4 py-2"
+              className="text-terminal-green hover:text-terminal-cyan transition-colors font-mono text-xs sm:text-sm terminal-border px-3 py-1.5 sm:px-4 sm:py-2"
             >
               [CONTACT]
             </Link>

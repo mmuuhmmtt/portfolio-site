@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 
 const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -62,7 +63,37 @@ const Navigation = () => {
               </a>
             ))}
           </div>
+
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="md:hidden text-terminal-green font-mono text-sm focus:outline-none"
+            aria-label="Toggle menu"
+          >
+            {isMobileMenuOpen ? '[CLOSE]' : '[MENU]'}
+          </button>
         </div>
+
+        {/* Mobile Navigation Menu */}
+        {isMobileMenuOpen && (
+          <div className="md:hidden border-t border-terminal-green/20 bg-dark-bg/95 backdrop-blur-sm">
+            <div className="px-6 py-4 space-y-4">
+              {navItems.map((item) => (
+                <a
+                  key={item.name}
+                  href={item.href}
+                  onClick={(e) => {
+                    handleNavClick(e, item.href)
+                    setIsMobileMenuOpen(false)
+                  }}
+                  className="block text-terminal-gray hover:text-terminal-green transition-colors font-mono text-xs py-2"
+                >
+                  {item.name}
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </nav>
   )
