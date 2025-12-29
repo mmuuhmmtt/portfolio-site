@@ -12,6 +12,13 @@ const Hero = () => {
   const [videoError, setVideoError] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
   const videoRef = useRef<HTMLVideoElement>(null)
+  
+  // Get base path for GitHub Pages
+  const basePath = typeof window !== 'undefined' 
+    ? window.location.pathname.split('/').slice(0, -1).join('/') || ''
+    : ''
+  
+  const videoPath = `${basePath}/videos/video.mp4`
 
   const targetText1 = 'MUHAMMET'
   const targetText2 = 'COŞGUN'
@@ -134,13 +141,17 @@ const Hero = () => {
         {!videoError && !isMobile ? (
           <video
             ref={videoRef}
-            src="/videos/video.mp4"
+            src={videoPath}
             autoPlay
             loop
             muted
             playsInline
             className="w-full h-full object-cover grayscale"
             preload="auto"
+            onError={() => {
+              console.error('Video load error, trying fallback path')
+              setVideoError(true)
+            }}
           />
         ) : null}
         
@@ -199,7 +210,7 @@ const Hero = () => {
       </div>
 
       {/* Main content */}
-      <div className="max-w-6xl mx-auto w-full relative z-10 pt-16 sm:pt-0">
+      <div className="max-w-6xl mx-auto w-full relative z-20 pt-16 sm:pt-0">
         <div className="space-y-6 sm:space-y-8">
           {/* Terminal prompt style */}
           <div className="text-terminal-green text-xs sm:text-sm mb-2 sm:mb-4">
@@ -236,16 +247,16 @@ const Hero = () => {
           </div>
 
           {/* Navigation links */}
-          <div className="flex flex-wrap gap-4 sm:gap-6 pt-4 sm:pt-8">
+          <div className="flex flex-wrap gap-4 sm:gap-6 pt-4 sm:pt-8 relative z-30">
             <Link
               href="#projects"
-              className="text-terminal-green hover:text-terminal-cyan transition-colors font-mono text-xs sm:text-sm terminal-border px-3 py-1.5 sm:px-4 sm:py-2"
+              className="text-terminal-green hover:text-terminal-cyan transition-colors font-mono text-xs sm:text-sm terminal-border px-3 py-1.5 sm:px-4 sm:py-2 bg-dark-bg/50 backdrop-blur-sm hover:bg-dark-bg/70"
             >
               [VIEW PROJECTS]
             </Link>
             <Link
               href="#contact"
-              className="text-terminal-green hover:text-terminal-cyan transition-colors font-mono text-xs sm:text-sm terminal-border px-3 py-1.5 sm:px-4 sm:py-2"
+              className="text-terminal-green hover:text-terminal-cyan transition-colors font-mono text-xs sm:text-sm terminal-border px-3 py-1.5 sm:px-4 sm:py-2 bg-dark-bg/50 backdrop-blur-sm hover:bg-dark-bg/70"
             >
               [CONTACT]
             </Link>
@@ -264,8 +275,8 @@ const Hero = () => {
         }}></div>
       </div>
 
-      {/* Fade-out gradient at bottom for smooth transition */}
-      <div className="absolute bottom-0 left-0 right-0 h-64 pointer-events-none z-10 bg-gradient-to-t from-dark-bg via-dark-bg/80 to-transparent"></div>
+      {/* Fade-out gradient at bottom for smooth transition - only affects background */}
+      <div className="absolute bottom-0 left-0 right-0 h-64 pointer-events-none z-5 bg-gradient-to-t from-dark-bg via-dark-bg/80 to-transparent"></div>
     </section>
   )
 }
