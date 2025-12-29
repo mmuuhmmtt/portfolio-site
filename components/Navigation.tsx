@@ -5,22 +5,46 @@ import { useState, useEffect } from 'react'
 const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [activeSection, setActiveSection] = useState('')
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50)
+      
+      // Aktif section'ı belirle
+      const sections = ['about', 'projects', 'experience', 'skills', 'education', 'contact']
+      const scrollPosition = window.scrollY + 100 // Offset for better detection
+      
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const section = document.getElementById(sections[i])
+        if (section && section.offsetTop <= scrollPosition) {
+          setActiveSection(sections[i])
+          break
+        }
+      }
     }
+    
+    // İlk yüklemede hash varsa aktif section'ı ayarla
+    if (typeof window !== 'undefined') {
+      const hash = window.location.hash.slice(1)
+      if (hash) {
+        setActiveSection(hash)
+      }
+    }
+    
     window.addEventListener('scroll', handleScroll)
+    handleScroll() // İlk yüklemede çalıştır
+    
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
   const navItems = [
-    { name: 'ABOUT', href: '#about' },
-    { name: 'PROJECTS', href: '#projects' },
-    { name: 'EXPERIENCE', href: '#experience' },
-    { name: 'SKILLS', href: '#skills' },
-    { name: 'EDUCATION', href: '#education' },
-    { name: 'CONTACT', href: '#contact' },
+    { name: 'ABOUT', href: '#about', id: 'about' },
+    { name: 'PROJECTS', href: '#projects', id: 'projects' },
+    { name: 'EXPERIENCE', href: '#experience', id: 'experience' },
+    { name: 'SKILLS', href: '#skills', id: 'skills' },
+    { name: 'EDUCATION', href: '#education', id: 'education' },
+    { name: 'CONTACT', href: '#contact', id: 'contact' },
   ]
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
@@ -51,17 +75,29 @@ const Navigation = () => {
           </a>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-6">
-            {navItems.map((item) => (
-              <a
-                key={item.name}
-                href={item.href}
-                onClick={(e) => handleNavClick(e, item.href)}
-                className="text-terminal-gray hover:text-terminal-green transition-colors font-mono text-xs"
-              >
-                {item.name}
-              </a>
-            ))}
+          <div className="hidden md:flex items-center gap-3">
+            {navItems.map((item) => {
+              const isActive = activeSection === item.id
+              return (
+                <a
+                  key={item.name}
+                  href={item.href}
+                  onClick={(e) => handleNavClick(e, item.href)}
+                  className={`transition-all duration-300 font-mono text-xs terminal-border px-3 py-1.5 relative group ${
+                    isActive
+                      ? 'text-terminal-green border-terminal-green bg-dark-bg/50 shadow-[0_0_10px_rgba(0,255,65,0.3)]'
+                      : 'text-terminal-gray/90 hover:text-terminal-green hover:border-terminal-green hover:bg-dark-bg/50 hover:shadow-[0_0_10px_rgba(0,255,65,0.3)]'
+                  }`}
+                >
+                  <span className="relative z-10">{item.name}</span>
+                  <span className={`absolute inset-0 transition-all duration-300 ${
+                    isActive
+                      ? 'bg-terminal-green/10'
+                      : 'bg-terminal-green/0 group-hover:bg-terminal-green/10'
+                  }`}></span>
+                </a>
+              )
+            })}
           </div>
 
           {/* Mobile Menu Button */}
@@ -77,20 +113,32 @@ const Navigation = () => {
         {/* Mobile Navigation Menu */}
         {isMobileMenuOpen && (
           <div className="md:hidden border-t border-terminal-green/20 bg-dark-bg/95 backdrop-blur-sm">
-            <div className="px-6 py-4 space-y-4">
-              {navItems.map((item) => (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  onClick={(e) => {
-                    handleNavClick(e, item.href)
-                    setIsMobileMenuOpen(false)
-                  }}
-                  className="block text-terminal-gray hover:text-terminal-green transition-colors font-mono text-xs py-2"
-                >
-                  {item.name}
-                </a>
-              ))}
+            <div className="px-6 py-4 space-y-3">
+              {navItems.map((item) => {
+                const isActive = activeSection === item.id
+                return (
+                  <a
+                    key={item.name}
+                    href={item.href}
+                    onClick={(e) => {
+                      handleNavClick(e, item.href)
+                      setIsMobileMenuOpen(false)
+                    }}
+                    className={`block transition-all duration-300 font-mono text-xs py-2 px-3 terminal-border relative group ${
+                      isActive
+                        ? 'text-terminal-green border-terminal-green bg-dark-bg/50 shadow-[0_0_10px_rgba(0,255,65,0.3)]'
+                        : 'text-terminal-gray/90 hover:text-terminal-green hover:border-terminal-green hover:bg-dark-bg/50 hover:shadow-[0_0_10px_rgba(0,255,65,0.3)]'
+                    }`}
+                  >
+                    <span className="relative z-10">{item.name}</span>
+                    <span className={`absolute inset-0 transition-all duration-300 ${
+                      isActive
+                        ? 'bg-terminal-green/10'
+                        : 'bg-terminal-green/0 group-hover:bg-terminal-green/10'
+                    }`}></span>
+                  </a>
+                )
+              })}
             </div>
           </div>
         )}
