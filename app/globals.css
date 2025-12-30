@@ -96,6 +96,20 @@ body::before {
     inset 0 0 15px rgba(0, 255, 65, 0.1);
 }
 
+/* Proje kartları için özel hover efekti */
+.project-card {
+  transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+}
+
+.project-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 
+    0 0 25px rgba(0, 255, 65, 0.4),
+    0 0 50px rgba(0, 255, 65, 0.15),
+    0 -4px 20px rgba(0, 255, 65, 0.2),
+    inset 0 0 15px rgba(0, 255, 65, 0.1);
+}
+
 /* Pixel-style elements */
 .pixel-border {
   border-style: solid;
@@ -234,9 +248,9 @@ a, button {
 
 .scroll-scale {
   opacity: 0;
-  transform: scale(0.9);
-  transition: opacity 0.8s cubic-bezier(0.34, 1.56, 0.64, 1),
-              transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transform: scale(0.95);
+  transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   transition-delay: var(--animation-delay, 0ms);
   will-change: opacity, transform;
 }
@@ -253,3 +267,11 @@ a, button {
 .scroll-stagger-4 { --animation-delay: 300ms; }
 .scroll-stagger-5 { --animation-delay: 400ms; }
 .scroll-stagger-6 { --animation-delay: 500ms; }
+
+/* Line clamp utility */
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
