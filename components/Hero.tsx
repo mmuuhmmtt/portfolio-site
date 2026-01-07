@@ -279,14 +279,14 @@ const Hero = ({ onLoadingChange }: HeroProps = {}) => {
       {/* Terminal-style header */}
       <div className="absolute top-20 sm:top-8 left-4 right-4 sm:left-6 sm:right-6 flex flex-col sm:flex-row items-start sm:items-center justify-between text-xs sm:text-sm text-terminal-gray z-20 gap-2 sm:gap-0">
         <div className="flex items-center gap-2 sm:gap-4 flex-wrap">
-          <span className="text-terminal-green">SYSTEM</span>
-          <span className="text-terminal-cyan">
+          <span className="text-terminal-green/40">SYSTEM</span>
+          <span className="text-terminal-cyan/40">
             {systemReady < 100 ? `${systemReady}%` : 'READY'}
           </span>
         </div>
         <div className="flex items-center gap-2 sm:gap-4 flex-wrap">
-          <span className="text-terminal-amber hidden sm:inline">ANKARA, TR</span>
-          <span className="text-terminal-green">{mounted && currentTime}</span>
+          <span className="text-terminal-amber/40 hidden sm:inline">ANKARA, TR</span>
+          <span className="text-terminal-green/40">{mounted && currentTime}</span>
         </div>
       </div>
 
@@ -300,7 +300,7 @@ const Hero = ({ onLoadingChange }: HeroProps = {}) => {
                 <img
                   src={imagePath}
                   alt="Muhammet Coşgun"
-                  className="w-48 h-48 sm:w-56 sm:h-56 object-cover grayscale hover:grayscale-0 transition-all duration-500"
+                  className="w-40 h-40 sm:w-48 sm:h-48 object-cover grayscale hover:grayscale-0 transition-all duration-500"
                   onError={(e) => {
                     // Fallback if image doesn't exist
                     e.currentTarget.style.display = 'none'
@@ -361,9 +361,6 @@ const Hero = ({ onLoadingChange }: HeroProps = {}) => {
               </div>
             </div>
 
-            <div className="pt-4 sm:pt-8 text-sm sm:text-base md:text-lg text-terminal-gray font-mono leading-relaxed max-w-3xl">
-              <div className="terminal-prompt">Turning ideas into smooth web experiences.</div>
-            </div>
 
             {/* Navigation links */}
             <div className="flex flex-wrap gap-4 sm:gap-6 pt-4 sm:pt-8 relative z-30">
@@ -389,7 +386,7 @@ const Hero = ({ onLoadingChange }: HeroProps = {}) => {
                 <img
                   src={imagePath}
                   alt="Muhammet Coşgun"
-                  className="w-64 h-64 object-cover grayscale hover:grayscale-0 transition-all duration-500"
+                  className="w-56 h-56 object-cover grayscale hover:grayscale-0 transition-all duration-500"
                   onError={(e) => {
                     // Fallback if image doesn't exist
                     e.currentTarget.style.display = 'none'

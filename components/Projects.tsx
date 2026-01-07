@@ -296,7 +296,7 @@ const Projects = () => {
             ))}
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
             {githubProjects.map((project, index) => (
               <ScrollScale key={project.name} delay={index * 120}>
                 <div className="terminal-border project-card overflow-hidden hover:border-terminal-green group flex flex-col h-full bg-gradient-to-b from-transparent to-terminal-green/5 cursor-pointer">
