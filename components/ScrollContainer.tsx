@@ -31,9 +31,9 @@ const ScrollContainer = ({ children }: ScrollContainerProps) => {
   const [isScrolling, setIsScrolling] = useState(false)
   const y = useMotionValue(0)
   const springY = useSpring(y, {
-    stiffness: 200,
-    damping: 40,
-    mass: 0.8,
+    stiffness: 100,
+    damping: 30,
+    mass: 0.5,
   })
 
   const goToSection = (index: number) => {
@@ -73,7 +73,7 @@ const ScrollContainer = ({ children }: ScrollContainerProps) => {
       section.style.height = '100vh'
       section.style.zIndex = String(sectionElements.length - index)
       section.style.transform = `translateY(${index * 100}vh)`
-      section.style.transition = 'transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)'
+      section.style.transition = 'transform 1s cubic-bezier(0.4, 0, 0.2, 1)'
       section.style.willChange = 'transform'
     })
   }, [children])
@@ -229,7 +229,7 @@ const ScrollContainer = ({ children }: ScrollContainerProps) => {
       setTimeout(() => {
         setIsScrolling(false)
         isScrollingLocked = false
-      }, 600)
+      }, 800)
     }
 
     window.addEventListener('wheel', handleWheel, { passive: false })
