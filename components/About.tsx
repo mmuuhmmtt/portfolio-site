@@ -21,13 +21,13 @@ const About = () => {
           <div className="terminal-border p-4 sm:p-6 md:p-8 max-w-4xl">
             <div className="space-y-3 sm:space-y-4 text-terminal-gray font-mono text-sm sm:text-base leading-relaxed">
               <div className="terminal-prompt">
-                Bilgisayar Programcılığı altyapısına sahip, Başkent Üniversitesi Yönetim Bilişim Sistemleri öğrencisiyim.
+                Full-Stack Developer with hands-on experience in Angular, React, Next.js, ABP Framework, and Spring Boot.
               </div>
               <div className="terminal-prompt">
-                Frontend geliştirme ve modern web teknolojileriyle, kullanıcı deneyimini ön planda tutan arayüzler tasarlıyor ve geliştiriyorum.
+                Skilled in developing web applications, REST APIs, and database management systems with focus on user experience and code quality.
               </div>
               <div className="terminal-prompt">
-                Gerçek projelerde edindiğim kurumsal deneyimlerle, ölçeklenebilir ve sürdürülebilir web çözümleri üretmeyi hedefliyorum.
+                Building scalable and maintainable solutions through real-world project experience and continuous learning.
               </div>
             </div>
           </div>
