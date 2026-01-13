@@ -11,6 +11,19 @@ const Navigation = ({ isLoading = false }: NavigationProps) => {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [activeSection, setActiveSection] = useState('')
+  const [basePath, setBasePath] = useState('')
+
+  useEffect(() => {
+    // BasePath kontrolü - GitHub Pages için
+    if (typeof window !== 'undefined') {
+      const pathname = window.location.pathname
+      if (pathname.startsWith('/portfolio-site')) {
+        setBasePath('/portfolio-site')
+      } else {
+        setBasePath('')
+      }
+    }
+  }, [])
 
   useEffect(() => {
     const handleScroll = () => {
@@ -109,7 +122,7 @@ const Navigation = ({ isLoading = false }: NavigationProps) => {
               )
             })}
             <a
-              href="/CV_MUHAMMET.pdf"
+              href={`${basePath}/CV_MUHAMMET.pdf`}
               download
               className="transition-all duration-300 font-mono text-xs terminal-border px-4 py-2 relative group flex items-center gap-2 text-terminal-green hover:text-terminal-cyan hover:border-terminal-cyan hover:bg-dark-bg/50 hover:shadow-[0_0_10px_rgba(0,255,100,0.3)]"
             >
@@ -158,7 +171,7 @@ const Navigation = ({ isLoading = false }: NavigationProps) => {
                 )
               })}
               <a
-                href="/CV_MUHAMMET.pdf"
+                href={`${basePath}/CV_MUHAMMET.pdf`}
                 download
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="block transition-all duration-300 font-mono text-xs py-3 px-4 terminal-border relative group text-center w-full text-terminal-green hover:text-terminal-cyan hover:border-terminal-cyan hover:bg-dark-bg/50 hover:shadow-[0_0_10px_rgba(0,255,100,0.3)]"

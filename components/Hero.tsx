@@ -277,7 +277,7 @@ const Hero = ({ onLoadingChange }: HeroProps = {}) => {
       )}
 
       {/* Terminal-style header */}
-      <div className="absolute top-20 sm:top-8 left-4 right-4 sm:left-6 sm:right-6 flex flex-col sm:flex-row items-start sm:items-center justify-between text-xs sm:text-sm text-terminal-gray z-20 gap-2 sm:gap-0">
+      <div className="absolute top-20 sm:top-8 left-4 right-4 sm:left-6 sm:right-6 flex flex-col sm:flex-row items-start sm:items-center justify-between text-xs sm:text-sm text-terminal-gray z-30 gap-2 sm:gap-0">
         <div className="flex items-center gap-2 sm:gap-4 flex-wrap">
           <span className="text-terminal-green/40">SYSTEM</span>
           <span className="text-terminal-cyan/40">
