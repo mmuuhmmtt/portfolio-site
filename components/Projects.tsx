@@ -2,6 +2,7 @@
 
 import { ExternalLink, Github } from 'lucide-react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { ScrollSlideUp, ScrollFadeIn, ScrollScale } from '@/components/ScrollAnimations'
 
@@ -16,15 +17,6 @@ interface Project {
 }
 
 const defaultProjects: Project[] = [
-  {
-    name: 'Portfolio Website',
-    description: 'Modern ve responsive portföy web sitesi. Next.js ve Tailwind CSS kullanılarak geliştirildi.',
-    technologies: ['Next.js', 'TypeScript', 'Tailwind CSS'],
-    githubUrl: 'https://github.com/mmuuhmmtt/portfolio-site',
-    siteUrl: 'https://mmuuhmmtt.github.io/portfolio-site/',
-    featured: true,
-    imageUrl: '/images/project1.png',
-  },
   {
     name: 'AI ChatHub V1',
     description: 'AI destekli sohbet uygulaması. Modern web teknolojileri kullanılarak geliştirilmiştir.',

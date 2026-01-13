@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { Download } from 'lucide-react'
 
 interface NavigationProps {
   isLoading?: boolean
@@ -107,6 +108,14 @@ const Navigation = ({ isLoading = false }: NavigationProps) => {
                 </a>
               )
             })}
+            <a
+              href="/CV_MUHAMMET.pdf"
+              download
+              className="transition-all duration-300 font-mono text-xs terminal-border px-4 py-2 relative group flex items-center gap-2 text-terminal-green hover:text-terminal-cyan hover:border-terminal-cyan hover:bg-dark-bg/50 hover:shadow-[0_0_10px_rgba(0,255,100,0.3)]"
+            >
+              <Download size={14} />
+              <span className="relative z-10 whitespace-nowrap">CV</span>
+            </a>
           </div>
 
           {/* Mobile Menu Button */}
@@ -148,6 +157,17 @@ const Navigation = ({ isLoading = false }: NavigationProps) => {
                   </a>
                 )
               })}
+              <a
+                href="/CV_MUHAMMET.pdf"
+                download
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="block transition-all duration-300 font-mono text-xs py-3 px-4 terminal-border relative group text-center w-full text-terminal-green hover:text-terminal-cyan hover:border-terminal-cyan hover:bg-dark-bg/50 hover:shadow-[0_0_10px_rgba(0,255,100,0.3)]"
+              >
+                <span className="relative z-10 flex items-center justify-center gap-2">
+                  <Download size={14} />
+                  CV İNDİR
+                </span>
+              </a>
             </div>
           </div>
         )}

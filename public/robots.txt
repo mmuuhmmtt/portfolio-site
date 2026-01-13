@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+
+# Sitemap location
+Sitemap: https://mmuuhmmtt.github.io/portfolio-site/sitemap.xml

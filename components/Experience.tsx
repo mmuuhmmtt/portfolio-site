@@ -12,32 +12,38 @@ interface ExperienceItem {
 const experiences: ExperienceItem[] = [
   {
     title: 'Full-Stack Developer',
-    company: 'EGY Yazılım',
-    period: 'Eylül 2025 – Devam ediyor',
-    type: 'Stajyer',
-  },
-  {
-    title: 'Frontend Web Developer',
-    company: 'SmartICT',
-    period: 'Ağustos 2025',
-    type: 'Stajyer',
-  },
-  {
-    title: 'Uygulama Geliştirici',
-    company: 'Fernus Bilişim',
-    period: 'Mayıs 2023 – Kasım 2023',
+    company: 'EG Yazılım',
+    period: 'Ocak 2026 – Devam ediyor',
     type: 'Tam Zamanlı',
   },
   {
-    title: 'Ürün Geliştirme',
-    company: 'Fernus Bilişim',
-    period: 'Nisan 2023 – Mayıs 2023',
+    title: 'Full-Stack Intern',
+    company: 'EG Yazılım',
+    period: 'Eylül 2025 – Ocak 2026',
     type: 'Stajyer',
   },
   {
-    title: 'Bilgisayar Teknisyeni',
+    title: 'Software Development Intern',
+    company: 'SmartICT Bilişim A.Ş.',
+    period: 'Kasım 2025 – Aralık 2025',
+    type: 'Stajyer',
+  },
+  {
+    title: 'Software Development',
+    company: 'Fernus Technology',
+    period: 'Haziran 2023 – Ocak 2024',
+    type: 'Tam Zamanlı',
+  },
+  {
+    title: 'Software Development Intern',
+    company: 'Fernus Technology',
+    period: 'Eylül 2022 – Ekim 2022',
+    type: 'Stajyer',
+  },
+  {
+    title: 'Hardware Intern',
     company: 'Başkent Üniversitesi',
-    period: 'Nisan 2022 – Mayıs 2022',
+    period: 'Aralık 2022 – Ocak 2023',
     type: 'Stajyer',
   },
 ]

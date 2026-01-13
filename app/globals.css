@@ -2,25 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+/* Font optimization */
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap&font-display=swap');
 
-:root {
-  --foreground-rgb: 200, 255, 200;
-  --background-rgb: 5, 5, 10;
-  --terminal-green: #00ff41;
-  --terminal-cyan: #00ffff;
-  --terminal-amber: #ffb000;
-  --terminal-red: #ff0040;
+@font-face {
+  font-family: 'Share Tech Mono';
+  src: local('Share Tech Mono'), local('ShareTechMono');
+  font-display: swap;
 }
 
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-}
-
+/* Performance optimizations */
 html {
   scroll-behavior: smooth;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 html,

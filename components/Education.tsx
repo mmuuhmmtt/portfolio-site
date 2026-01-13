@@ -13,13 +13,13 @@ const education: EducationItem[] = [
   {
     degree: 'Yönetim Bilişim Sistemleri',
     institution: 'Başkent Üniversitesi',
-    period: 'Devam ediyor',
+    period: 'Ağustos 2023 – Nisan 2026',
     status: 'Lisans',
   },
   {
     degree: 'Bilgisayar Programcılığı',
     institution: 'Başkent Üniversitesi',
-    period: 'Mezun',
+    period: 'Eylül 2021 – Temmuz 2023',
     status: 'Ön Lisans',
   },
 ]
@@ -47,9 +47,15 @@ const Education = () => {
               >
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4">
                 <div className="md:col-span-2">
-                  <h3 className="text-terminal-green font-mono text-base sm:text-lg mb-1 sm:mb-2">
-                    {edu.degree}
-                  </h3>
+                  <div className="flex items-center gap-2 mb-1 sm:mb-2">
+                    <h3 className="text-terminal-green font-mono text-base sm:text-lg">
+                      {edu.degree}
+                    </h3>
+                    <span className="text-terminal-gray font-mono text-xs sm:text-sm">-</span>
+                    <span className="text-terminal-cyan font-mono text-xs sm:text-sm">
+                      {edu.status}
+                    </span>
+                  </div>
                   {edu.institution && (
                     <div className="text-terminal-cyan font-mono text-xs sm:text-sm mb-1 sm:mb-2">
                       {edu.institution}
@@ -59,8 +65,8 @@ const Education = () => {
                     {edu.period}
                   </div>
                 </div>
-                <div className="text-terminal-amber font-mono text-xs sm:text-sm text-left md:text-left mt-2 md:mt-0">
-                  {edu.status}
+                <div className="text-terminal-amber font-mono text-xs sm:text-sm text-left md:text-right mt-2 md:mt-0">
+                  Mezun
                 </div>
               </div>
             </div>
